@@ -1,17 +1,36 @@
 version: 2.1
-orbs:
-  node: circleci/node@3.0.0
+
+jobs: 
+  test:
+    steps:
+      - checkout
+
+      # todo: find nicer solution than constantly "cd"ing to unit_testing
+      - run: cd api && npm install
+      - run: cd api && npm test
+
+      # TODO: add caching to speed things up.
+
+  install:
+    name: Install Docker Compose
+    command: |
+      curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+      chmod +x ~/docker-compose
+      sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+  build:
+    steps: 
+      - docker-compose build
+
+  publish: 
+
+
 workflows:
-  node-tests:
-    jobs:
-
-      - checkout 
-      
-      - run: cd api
-
-      - node/test
-      
-  docker-build:
-
-  docker-publish: 
+  version: 2
+  complete_run:
+    - test
+    - install
+    - setup_remote_docker
+    - build
+    - publish
 
