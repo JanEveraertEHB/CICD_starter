@@ -1,0 +1,39 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:12.18
+
+    steps:
+      - checkout
+
+      - run: cd api && npm install
+      - run: cd api && npm test
+
+
+      - setup_remote_docker
+
+      
+      - run: |
+          curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+          chmod +x ~/docker-compose
+          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+
+      - run: |
+          set -x
+          docker-compose up -d
+
+
+      - run: |
+          cd api
+          TAG="0.1.${CIRCLE_BUILD_NUM}"
+          docker build -t crshlab/cicd_starter:$TAG .
+          docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+          docker push crshlab/cicd_starter:$TAG
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
