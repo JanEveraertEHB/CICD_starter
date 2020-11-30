@@ -1,5 +1,5 @@
 
-const Conversationhelpers = require('./../helper/Conversationhelpers')
+const Conversationhelpers = require('./../helper/Conversationhelpers.js')
 
 describe('check if helper senses emotion', () => {
   test('check on bad input', () => {
