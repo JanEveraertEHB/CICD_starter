@@ -4,6 +4,14 @@ orbs:
 workflows:
   node-tests:
     jobs:
+
+      - checkout 
+      
+      - run: cd api
+
       - node/test
       
-      
+  docker-build:
+
+  docker-publish: 
+
