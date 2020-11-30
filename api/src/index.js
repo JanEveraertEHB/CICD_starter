@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const ConversationHelpers = require('./helper/ConversationHelpers')
-const port = 3000
+const port = process.env.PORT
 
 app.use(bodyParser.json());
 app.use(
