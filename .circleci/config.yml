@@ -8,5 +8,6 @@ workflow:
           - image: circleci/node:12.18
 
         steps:
+          - checkout
           - run: cd api && npm install
           - run: cd api && npm test
