@@ -11,7 +11,7 @@ services:
       POSTGRES_DB:
       PORT: 
     ports:
-      - PORT:PORT # [local]:[exposed]
+      - PORT:80 # [local]:[exposed]
 
   db:
     container_name: devBEX_store   
