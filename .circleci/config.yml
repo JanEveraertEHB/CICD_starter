@@ -21,12 +21,7 @@ jobs:
           chmod +x ~/docker-compose
           sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
-      # - run:
-      #     name: Build service
-      #     command: make
 
-      # - run:
-      #     name: Start container and verify it's working
-      #     command: |
-      #       set -x
-      #       docker-compose up -d
+      - run: |
+            set -x
+            docker-compose up -d
